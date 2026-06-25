@@ -1,1 +1,95 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Festnetz Anrufliste & Live-Monitor</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #121212; color: #e0e0e0; margin: 0; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; }
+        h1 { text-align: center; color: #fff; }
+        #live-alarm { margin-bottom: 25px; }
+        .alarm-card { background: #ff4444; color: #fff; padding: 20px; border-radius: 10px; text-align: center; font-size: 1.4em; font-weight: bold; box-shadow: 0 0 20px rgba(255, 68, 68, 0.5); animation: blinker 1.5s linear infinite; }
+        .talking-card { background: #0099ff; color: #fff; padding: 20px; border-radius: 10px; text-align: center; font-size: 1.4em; font-weight: bold; box-shadow: 0 0 20px rgba(0, 153, 255, 0.5); }
+        .alarm-card span, .talking-card span { display: block; margin-top: 5px; }
+        .filter-bar { margin-bottom: 20px; display: flex; gap: 10px; }
+        input { flex: 1; padding: 12px; background: #1e1e1e; border: 1px solid #333; color: #fff; border-radius: 6px; font-size: 1em; }
+        .call-list { display: flex; flex-direction: column; gap: 10px; }
+        .call-card { background: #1e1e1e; border: 1px solid #333; border-radius: 8px; padding: 15px; display: flex; align-items: center; justify-content: space-between; }
+        .call-main { display: flex; align-items: center; gap: 15px; }
+        .call-icon { font-size: 1.5em; width: 30px; text-align: center; }
+        .incoming { color: #00ff66; }
+        .outgoing { color: #33b5e5; }
+        .missed { color: #ff4444; }
+        .caller-info h3 { margin: 0; font-size: 1.1em; color: #fff; }
+        .caller-info span { font-size: 0.85em; color: #aaa; }
+        .call-meta { text-align: right; font-size: 0.9em; color: #bbb; }
+        .call-time { font-weight: bold; color: #fff; }
+        @keyframes blinker { 50% { opacity: 0.6; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📞 Festnetz Telefoniezentrum</h1>
+        <div id="live-alarm"></div>
+        <div class="filter-bar"><input type="text" id="searchInput" placeholder="Nach Name oder Nummer suchen..." onkeyup="filterCalls()"></div>
+        <div class="call-list" id="callList"><div class="call-card" style="justify-content: center; color: #aaa;">Lade Anrufliste...</div></div>
+    </div>
+    <script>
+        // === KONFIGURATION ===
+        const HA_URL = "https://1cbgsjyyusu6ydzrcy6uaqjcj5wrbyhw.ui.nabu.casa"; 
+        const HA_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI1MjI5MGRiNDVjZjA0ODU3YmE3MTk3MGFhNzg5YzZhZiIsImlhdCI6MTc4MjI0NDgxOCwiZXhwIjoyMDk3NjA0ODE4fQ.9qLVMXQO-uB6B8n2xAurbay3qJAy4Ahjtm0U9-ZXCrI"; 
+        // =====================
 
+        let callData = [];
+
+        async function checkLiveCall() {
+            try {
+                const response = await fetch(`${HA_URL}/api/states/sensor.fritz_box_6591_cable_anrufmonitor_telefonbuch`, {
+                    headers: { "Authorization": `Bearer ${HA_TOKEN}`, "Content-Type": "application/json" }
+                });
+                const data = await response.json();
+                const alarmBox = document.getElementById('live-alarm');
+                
+                if (data.state === 'ringing') {
+                    alarmBox.innerHTML = `<div class="alarm-card">🔔 EINGEHENDER ANRUF...<span>${data.attributes.from_name !== 'unknown' ? data.attributes.from_name : 'Unbekannt'}</span><span style="font-size:0.8em;">${data.attributes.from || ''}</span></div>`;
+                } else if (data.state === 'talking') {
+                    alarmBox.innerHTML = `<div class="talking-card">💬 AKTIVES GESPRÄCH<span>Mit: ${data.attributes.with_name !== 'unknown' ? data.attributes.with_name : 'Unbekannt'}</span></div>`;
+                } else {
+                    alarmBox.innerHTML = '';
+                }
+            } catch (e) { console.error(e); }
+        }
+
+        async function loadCallHistory() {
+            try {
+                const response = await fetch(`calls.json?t=${Date.now()}`);
+                callData = await response.json();
+                renderCalls(callData);
+            } catch (e) { document.getElementById('callList').innerHTML = '<div class="call-card" style="justify-content: center;">Noch keine Historie vorhanden.</div>'; }
+        }
+
+        function renderCalls(calls) {
+            const list = document.getElementById('callList'); list.innerHTML = '';
+            calls.forEach(call => {
+                const isIncoming = call.type === 'Eingehend';
+                const isMissed = isIncoming && (!call.duration || call.duration == 0);
+                let icon = '↗️'; let iconClass = 'outgoing';
+                if (isIncoming) { icon = isMissed ? '❌' : '↘️'; iconClass = isMissed ? 'missed' : 'incoming'; }
+
+                const card = document.createElement('div');
+                card.className = 'call-card';
+                card.innerHTML = `<div class="call-main"><div class="call-icon ${iconClass}">${icon}</div><div class="caller-info"><h3>${call.name !== 'unknown' ? call.name : 'Unbekannter Anrufer'}</h3><span>${call.number}</span></div></div><div class="call-meta"><div class="call-time">${formatDateTime(call.timestamp)}</div><div>${formatDuration(call.duration)}</div></div>`;
+                list.appendChild(card);
+            });
+        }
+
+        function formatDuration(s) { if (!s || s == 0) return "Verpasst"; const m = Math.floor(s / 60); return `${m}:${(s % 60).toString().padStart(2, '0')} Min.`; }
+        function formatDateTime(iso) { if (!iso) return ""; const d = new Date(iso); return d.toLocaleString('de-DE', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }); }
+        function filterCalls() { const q = document.getElementById('searchInput').value.toLowerCase(); renderCalls(callData.filter(c => c.number.includes(q) || (c.name && c.name.toLowerCase().includes(q)))); }
+
+        checkLiveCall(); loadCallHistory();
+        setInterval(checkLiveCall, 1500); setInterval(loadCallHistory, 30000);
+    </script>
+</body>
+</html>
