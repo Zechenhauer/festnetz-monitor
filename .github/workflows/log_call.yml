@@ -1,1 +1,31 @@
+name: Log Last Call
 
+on:
+  repository_dispatch:
+    types: [new_call]
+
+jobs:
+  append_call:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Append Call to JSON
+        run: |
+          if [ ! -f calls.json ]; then echo "[]" > calls.json; fi
+          jq --arg name '${{ github.event.client_payload.name }}' \
+             --arg number '${{ github.event.client_payload.number }}' \
+             --arg duration '${{ github.event.client_payload.duration }}' \
+             --arg type '${{ github.event.client_payload.type }}' \
+             --arg ts '${{ github.event.client_payload.timestamp }}' \
+            '. = [{"name": $name, "number": $number, "duration": $duration, "type": $type, "timestamp": $ts}] + .' \
+            calls.json > temp.json && mv temp.json calls.json
+
+      - name: Commit and Push changes
+        run: |
+          git config --global user.name "Home Assistant"
+          git config --global user.email "ha@local.home"
+          git add calls.json
+          git commit -m "📞 Neuer Anruf: ${{ github.event.client_payload.name }}"
+          git push
