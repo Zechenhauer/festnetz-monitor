@@ -7,6 +7,13 @@
     "timestamp": "2026-06-25T16:31:06"
   },
   {
+    "name": "Unbekannt",
+    "number": "Keine Nummer",
+    "duration": "61",
+    "type": "Unbekannt",
+    "timestamp": "2026-06-25T16:31:06"
+  },
+  {
     "name": "Echter Testanruf",
     "number": "01721234567",
     "duration": "45",
