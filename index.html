@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Festnetz Telefoniezentrum</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #0d0d0d;
+            --card-bg: #1a1a1a;
+            --text-color: #ffffff;
+            --text-muted: #aaaaaa;
+            --border-color: #333333;
+            --search-bg: #151515;
+            
+            /* Unsere Wunschfarben */
+            --color-green: #2ecc71;
+            --color-orange: #e67e22;
+            --color-red: #e74c3c;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        /* Suchfeld */
+        .search-box {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: var(--search-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-color);
+            font-size: 16px;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        .search-box input:focus {
+            border-color: #555;
+        }
+
+        /* Liste und Kacheln */
+        #call-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* Der gewohnte Basis-Rahmen */
+        .call-card {
+            background-color: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .call-card:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Farbliche Varianten für die Kacheln */
+        .call-card.ausgehend {
+            background: rgba(46, 204, 113, 0.03);
+            border-color: var(--color-green);
+            box-shadow: 0 0 10px rgba(46, 204, 113, 0.05);
+        }
+        .call-card.ausgehend .icon-wrapper {
+            color: var(--color-green);
+        }
+
+        .call-card.eingehend {
+            background: rgba(230, 126, 34, 0.03);
+            border-color: var(--color-orange);
+            box-shadow: 0 0 10px rgba(230, 126, 34, 0.05);
+        }
+        .call-card.eingehend .icon-wrapper {
+            color: var(--color-orange);
+        }
+
+        .call-card.verpasst {
+            background: rgba(231, 76, 60, 0.03);
+            border-color: var(--color-red);
+            box-shadow: 0 0 10px rgba(231, 76, 60, 0.05);
+        }
+        .call-card.verpasst .icon-wrapper {
+            color: var(--color-red);
+        }
+
+        /* Kachel-Inhalt */
+        .call-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .icon-wrapper {
+            font-size: 20px;
+            width: 30px;
+            text-align: center;
+        }
+
+        .details .name {
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 2px;
+        }
+
+        .details .number {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .call-meta {
+            text-align: right;
+        }
+
+        .call-meta .date {
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 2px;
+        }
+
+        .call-meta .type-label {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .no-results {
+            text-align: center;
+            color: var(--text-muted);
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1><i class="fa-solid fa-phone"></i> Festnetz Telefoniezentrum</h1>
+        
+        <div class="search-box">
+            <input type="text" id="search" placeholder="Nach Name oder Nummer suchen...">
+        </div>
+
+        <div id="call-list">
+            </div>
+    </div>
+
+    <script>
+        let allCalls = [];
+
+        // Hilfsfunktion zur Formatierung des Datums
+        function formatDate(timestamp) {
+            if (!timestamp || timestamp === "Nicht verfügbar") return "Unbekanntes Datum";
+            const date = new Date(timestamp);
+            if (isNaN(date.getTime())) return timestamp; // Falls es schon formatiert ist
+            
+            return date.toLocaleDateString('de-DE', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            }) + ' Uhr';
+        }
+
+        // Anrufe rendern
+        function renderCalls(calls) {
+            const list = document.getElementById('call-list');
+            list.innerHTML = '';
+
+            if (calls.length === 0) {
+                list.innerHTML = '<div class="no-results">Keine Anrufe gefunden.</div>';
+                return;
+            }
+
+            calls.forEach(call => {
+                const card = document.createElement('div');
+                card.className = 'call-card';
+
+                // Typ für CSS-Klasse normalisieren
+                const typeLower = (call.type || '').toLowerCase();
+                let typeClass = 'eingehend';
+                let icon = '<i class="fa-solid fa-arrow-down"></i>';
+
+                if (typeLower === 'ausgehend') {
+                    typeClass = 'ausgehend';
+                    icon = '<i class="fa-solid fa-arrow-up-right"></i>';
+                } else if (typeLower === 'verpasst') {
+                    typeClass = 'verpasst';
+                    icon = '<i class="fa-solid fa-phone-slash"></i>';
+                } else if (typeLower === 'eingehend' || typeLower === 'angenommen') {
+                    typeClass = 'eingehend';
+                    icon = '<i class="fa-solid fa-arrow-down-left"></i>';
+                }
+
+                card.classList.add(typeClass);
+
+                card.innerHTML = `
+                    <div class="call-info">
+                        <div class="icon-wrapper">${icon}</div>
+                        <div class="details">
+                            <div class="name">${call.name || 'Unbekannt'}</div>
+                            <div class="number">${call.number || 'Keine Nummer'}</div>
+                        </div>
+                    </div>
+                    <div class="call-meta">
+                        <div class="date">${formatDate(call.timestamp)}</div>
+                        <div class="type-label">${call.type || 'Unbekannt'} ${call.duration && call.duration !== '0' ? `(${call.duration}s)` : ''}</div>
+                    </div>
+                `;
+                list.appendChild(card);
+            });
+        }
+
+        // Daten aus calls.json laden
+        async function loadCalls() {
+            try {
+                // Verhindert das Cachen der JSON-Datei
+                const response = await fetch('calls.json?t=' + new Date().getTime());
+                allCalls = await response.json();
+                renderCalls(allCalls);
+            } catch (error) {
+                console.error('Fehler beim Laden der Anrufe:', error);
+                document.getElementById('call-list').innerHTML = '<div class="no-results">Fehler beim Laden der Anrufliste.</div>';
+            }
+        }
+
+        // Suchfunktion
+        document.getElementById('search').addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            const filtered = allCalls.filter(call => 
+                (call.name || '').toLowerCase().includes(query) || 
+                (call.number || '').toLowerCase().includes(query)
+            );
+            renderCalls(filtered);
+        });
+
+        // Initiales Laden
+        loadCalls();
+    </script>
+</body>
+</html>
