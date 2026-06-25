@@ -12,14 +12,14 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Append Call to JSON
+        env:
+          PAYLOAD: ${{ toJson(github.event.client_payload) }}
         run: |
           if [ ! -f calls.json ]; then echo "[]" > calls.json; fi
-          jq --arg name '${{ github.event.client_payload.name }}' \
-             --arg number '${{ github.event.client_payload.number }}' \
-             --arg duration '${{ github.event.client_payload.duration }}' \
-             --arg type '${{ github.event.client_payload.type }}' \
-             --arg ts '${{ github.event.client_payload.timestamp }}' \
-            '. = [{"name": $name, "number": $number, "duration": $duration, "type": $type, "timestamp": $ts}] + .' \
+          
+          # Wir lesen die Daten direkt sicher aus der Umgebungsvariable
+          jq --argjson data "$PAYLOAD" \
+            '. = [{"name": $data.name, "number": $data.number, "duration": $data.duration, "type": $data.type, "timestamp": $data.timestamp}] + .' \
             calls.json > temp.json && mv temp.json calls.json
 
       - name: Commit and Push changes
@@ -27,5 +27,7 @@ jobs:
           git config --global user.name "Home Assistant"
           git config --global user.email "ha@local.home"
           git add calls.json
-          git commit -m "📞 Neuer Anruf: ${{ github.event.client_payload.name }}"
+          # Falls der Name leer ist, nutzen wir einen Fallback im Commit-Text
+          NAME="${{ github.event.client_payload.name }}"
+          git commit -m "📞 Neuer Anruf: ${NAME:-Unbekannt}"
           git push
