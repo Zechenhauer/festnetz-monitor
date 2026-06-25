@@ -13,21 +13,27 @@ jobs:
 
       - name: Append Call to JSON
         env:
-          PAYLOAD: ${{ toJson(github.event.client_payload) }}
+          CALL_NAME: ${{ github.event.client_payload.name }}
+          CALL_NUM: ${{ github.event.client_payload.number }}
+          CALL_DUR: ${{ github.event.client_payload.duration }}
+          CALL_TYPE: ${{ github.event.client_payload.type }}
+          CALL_TS: ${{ github.event.client_payload.timestamp }}
         run: |
           if [ ! -f calls.json ]; then echo "[]" > calls.json; fi
           
-          # Wir lesen die Daten direkt sicher aus der Umgebungsvariable
-          jq --argjson data "$PAYLOAD" \
-            '. = [{"name": $data.name, "number": $data.number, "duration": $data.duration, "type": $data.type, "timestamp": $data.timestamp}] + .' \
-            calls.json > temp.json && mv temp.json calls.json
+          # jq holt sich die Variablen jetzt direkt aus dem Linux-System (völlig ohne JSON-Konflikte)
+          jq --arg name "$CALL_NAME" \
+             --arg number "$CALL_NUM" \
+             --arg duration "$CALL_DUR" \
+             --arg type "$CALL_TYPE" \
+             --arg ts "$CALL_TS" \
+             '. = [{"name": $name, "number": $number, "duration": $duration, "type": $type, "timestamp": $ts}] + .' \
+             calls.json > temp.json && mv temp.json calls.json
 
       - name: Commit and Push changes
         run: |
           git config --global user.name "Home Assistant"
           git config --global user.email "ha@local.home"
           git add calls.json
-          # Falls der Name leer ist, nutzen wir einen Fallback im Commit-Text
-          NAME="${{ github.event.client_payload.name }}"
-          git commit -m "📞 Neuer Anruf: ${NAME:-Unbekannt}"
+          git commit -m "📞 Neuer Anruf registriert"
           git push
