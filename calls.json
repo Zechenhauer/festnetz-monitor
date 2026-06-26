@@ -1,9 +1,16 @@
 [
   {
+    "name": "Pizza Akbas",
+    "number": "028418887646",
+    "duration": "66",
+    "type": "outgoing",
+    "timestamp": "2026-06-26T20:34:10"
+  },
+  {
     "name": "Ruth",
     "number": "0284125458",
     "duration": "1",
     "type": "Ausgehend",
     "timestamp": "2026-06-26T08:05:26"
   }
-] 
+]
