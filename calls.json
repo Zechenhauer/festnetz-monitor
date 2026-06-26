@@ -2,50 +2,7 @@
   {
     "name": "Ruth",
     "number": "0284125458",
-    "duration": "0",
-    "type": "Ausgehend",
-    "timestamp": "2026-06-26T08:05:52"
-  },
-  {
-    "name": "Ruth",
-    "number": "0284125458",
-    "duration": "0",
-    "type": "Ausgehend",
-    "timestamp": "2026-06-26T08:05:52"
-  },
-  {
-    "name": "Ruth",
-    "number": "0284125458",
-    "duration": "0",
-    "type": "Ausgehend",
-    "timestamp": "2026-06-26T08:05:40"
-  },
-  {
-    "name": "Ruth",
-    "number": "0284125458",
     "duration": "1",
     "type": "Ausgehend",
     "timestamp": "2026-06-26T08:05:26"
-  },
-  {
-    "name": "Ruth",
-    "number": "0284125458",
-    "duration": "61",
-    "type": "Ausgehend",
-    "timestamp": "2026-06-25T16:31:06"
-  },
-  {
-    "name": "Ruth",
-    "number": "0284125458",
-    "duration": "61",
-    "type": "Ausgehend",
-    "timestamp": "2026-06-25T16:31:06"
-  },
-  {
-    "name": "Echter Testanruf",
-    "number": "01721234567",
-    "duration": "45",
-    "type": "Eingehend",
-    "timestamp": "2026-06-25T02:44:21Z"
   }
-]
