@@ -173,8 +173,7 @@
             <input type="text" id="search" placeholder="Nach Name oder Nummer suchen...">
         </div>
 
-        <div id="call-list">
-            </div>
+        <div id="call-list"></div>
     </div>
 
     <script>
@@ -209,18 +208,18 @@
                 const card = document.createElement('div');
                 card.className = 'call-card';
 
-                // Typ für CSS-Klasse normalisieren
-                const typeLower = (call.type || '').toLowerCase();
+                // Typ für CSS-Klasse & Icons normalisieren (akzeptiert jetzt Deutsch & Englisch)
+                const typeLower = (call.type || '').toLowerCase().trim();
                 let typeClass = 'eingehend';
                 let icon = '<i class="fa-solid fa-arrow-down"></i>';
 
-                if (typeLower === 'ausgehend') {
+                if (typeLower === 'ausgehend' || typeLower === 'outgoing') {
                     typeClass = 'ausgehend';
                     icon = '<i class="fa-solid fa-arrow-up-right"></i>';
-                } else if (typeLower === 'verpasst') {
+                } else if (typeLower === 'verpasst' || typeLower === 'missed') {
                     typeClass = 'verpasst';
                     icon = '<i class="fa-solid fa-phone-slash"></i>';
-                } else if (typeLower === 'eingehend' || typeLower === 'angenommen') {
+                } else if (typeLower === 'eingehend' || typeLower === 'angenommen' || typeLower === 'incoming') {
                     typeClass = 'eingehend';
                     icon = '<i class="fa-solid fa-arrow-down-left"></i>';
                 }
