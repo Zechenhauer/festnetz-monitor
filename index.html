@@ -90,13 +90,26 @@
             transform: translateY(-2px);
         }
 
-        /* Farbliche Varianten für die Kacheln */
+        /* Styling für die Icon-Box links (Hintergrund-Kästchen) */
+        .icon-wrapper {
+            font-size: 20px;
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        /* Farbliche Varianten für die Kacheln & Icons */
         .call-card.ausgehend {
             background: rgba(46, 204, 113, 0.03);
             border-color: var(--color-green);
             box-shadow: 0 0 10px rgba(46, 204, 113, 0.05);
         }
         .call-card.ausgehend .icon-wrapper {
+            background-color: rgba(46, 204, 113, 0.2);
             color: var(--color-green);
         }
 
@@ -106,6 +119,7 @@
             box-shadow: 0 0 10px rgba(230, 126, 34, 0.05);
         }
         .call-card.eingehend .icon-wrapper {
+            background-color: rgba(230, 126, 34, 0.2);
             color: var(--color-orange);
         }
 
@@ -115,6 +129,7 @@
             box-shadow: 0 0 10px rgba(231, 76, 60, 0.05);
         }
         .call-card.verpasst .icon-wrapper {
+            background-color: rgba(231, 76, 60, 0.2);
             color: var(--color-red);
         }
 
@@ -123,12 +138,6 @@
             display: flex;
             align-items: center;
             gap: 15px;
-        }
-
-        .icon-wrapper {
-            font-size: 20px;
-            width: 30px;
-            text-align: center;
         }
 
         .details .name {
@@ -208,7 +217,7 @@
                 const card = document.createElement('div');
                 card.className = 'call-card';
 
-                // Typ für CSS-Klasse & Icons normalisieren (akzeptiert jetzt Deutsch & Englisch)
+                // Typ für CSS-Klasse & Icons normalisieren
                 const typeLower = (call.type || '').toLowerCase().trim();
                 let typeClass = 'eingehend';
                 let icon = '<i class="fa-solid fa-arrow-down"></i>';
@@ -246,7 +255,6 @@
         // Daten aus calls.json laden
         async function loadCalls() {
             try {
-                // Verhindert das Cachen der JSON-Datei
                 const response = await fetch('calls.json?t=' + new Date().getTime());
                 allCalls = await response.json();
                 renderCalls(allCalls);
