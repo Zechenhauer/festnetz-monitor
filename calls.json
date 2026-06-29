@@ -1,5 +1,12 @@
 [
   {
+    "name": "Nesbach",
+    "number": "028412061203",
+    "duration": "414",
+    "type": "outgoing",
+    "timestamp": "2026-06-29T11:11:44"
+  },
+  {
     "name": "unknown",
     "number": "52032",
     "duration": "89",
