@@ -1,5 +1,12 @@
 [
   {
+    "name": "unknown",
+    "number": "54238",
+    "duration": "165",
+    "type": "outgoing",
+    "timestamp": "2026-07-17T12:22:24"
+  },
+  {
     "name": "Kretsch, Heike",
     "number": "02841518450",
     "duration": "4",
