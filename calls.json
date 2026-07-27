@@ -2,6 +2,13 @@
   {
     "name": "unknown",
     "number": "02811074711",
+    "duration": "666",
+    "type": "outgoing",
+    "timestamp": "2026-07-27T11:22:42"
+  },
+  {
+    "name": "unknown",
+    "number": "02811074711",
     "duration": "0",
     "type": "outgoing",
     "timestamp": "2026-07-27T11:07:27"
