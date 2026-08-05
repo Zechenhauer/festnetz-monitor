@@ -1,5 +1,12 @@
 [
   {
+    "name": "Rustica",
+    "number": "51346",
+    "duration": "38",
+    "type": "outgoing",
+    "timestamp": "2026-08-05T19:27:03"
+  },
+  {
     "name": "Pohl Büro",
     "number": "0284159615",
     "duration": "221",
