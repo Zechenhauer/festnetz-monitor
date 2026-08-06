@@ -2,6 +2,13 @@
   {
     "name": "Mandel Hippler",
     "number": "8810926",
+    "duration": "3",
+    "type": "outgoing",
+    "timestamp": "2026-08-06T08:49:42"
+  },
+  {
+    "name": "Mandel Hippler",
+    "number": "8810926",
     "duration": "0",
     "type": "outgoing",
     "timestamp": "2026-08-06T08:49:02"
