@@ -1,5 +1,12 @@
 [
   {
+    "name": "unknown",
+    "number": "028418888553",
+    "duration": "48",
+    "type": "outgoing",
+    "timestamp": "2026-08-12T12:11:07"
+  },
+  {
     "name": "Gnoß Maria",
     "number": "0284154238",
     "duration": "73",
