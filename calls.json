@@ -1,5 +1,12 @@
 [
   {
+    "name": "unknown",
+    "number": "028418810926",
+    "duration": "66",
+    "type": "incoming",
+    "timestamp": "2026-08-13T15:03:35"
+  },
+  {
     "name": "Mandel Hippler",
     "number": "8810926",
     "duration": "34",
