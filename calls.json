@@ -1,5 +1,12 @@
 [
   {
+    "name": "Ruth",
+    "number": "0284125458",
+    "duration": "192",
+    "type": "incoming",
+    "timestamp": "2026-08-13T15:15:45"
+  },
+  {
     "name": "unknown",
     "number": "028418810926",
     "duration": "66",
