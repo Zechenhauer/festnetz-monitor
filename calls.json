@@ -1,6 +1,13 @@
 [
   {
     "name": "unknown",
+    "number": "144555",
+    "duration": "79",
+    "type": "outgoing",
+    "timestamp": "2026-08-15T16:47:03"
+  },
+  {
+    "name": "unknown",
     "number": "068518649834",
     "duration": "11",
     "type": "incoming",
