@@ -2,6 +2,13 @@
   {
     "name": "unknown",
     "number": "0800100048013",
+    "duration": "192",
+    "type": "outgoing",
+    "timestamp": "2026-08-18T12:49:27"
+  },
+  {
+    "name": "unknown",
+    "number": "0800100048013",
     "duration": "98",
     "type": "outgoing",
     "timestamp": "2026-08-18T12:45:14"
