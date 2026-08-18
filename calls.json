@@ -2,6 +2,13 @@
   {
     "name": "Beckers, Augenarzt",
     "number": "0284533488",
+    "duration": "14",
+    "type": "outgoing",
+    "timestamp": "2026-08-18T07:29:45"
+  },
+  {
+    "name": "Beckers, Augenarzt",
+    "number": "0284533488",
     "duration": "1248",
     "type": "outgoing",
     "timestamp": "2026-08-17T17:10:56"
