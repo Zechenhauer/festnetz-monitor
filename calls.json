@@ -1,6 +1,13 @@
 [
   {
     "name": "unknown",
+    "number": "06974301397",
+    "duration": "0",
+    "type": "outgoing",
+    "timestamp": "2026-08-20T11:53:36"
+  },
+  {
+    "name": "unknown",
     "number": "06974301399",
     "duration": "0",
     "type": "outgoing",
