@@ -1,5 +1,12 @@
 [
   {
+    "name": "unknown",
+    "number": "089255569295",
+    "duration": "450",
+    "type": "outgoing",
+    "timestamp": "2026-08-25T10:22:30"
+  },
+  {
     "name": "Horn Steuerbüro",
     "number": "02841505111",
     "duration": "91",
