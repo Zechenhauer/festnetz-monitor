@@ -1,5 +1,12 @@
 [
   {
+    "name": "Energetix",
+    "number": "0672118230",
+    "duration": "143",
+    "type": "outgoing",
+    "timestamp": "2026-08-27T09:09:22"
+  },
+  {
     "name": "unknown",
     "number": "08002858585",
     "duration": "293",
