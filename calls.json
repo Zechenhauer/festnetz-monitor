@@ -2,6 +2,13 @@
   {
     "name": "unknown",
     "number": "02066370011",
+    "duration": "66",
+    "type": "incoming",
+    "timestamp": "2026-09-16T12:14:07"
+  },
+  {
+    "name": "unknown",
+    "number": "02066370011",
     "duration": "8",
     "type": "outgoing",
     "timestamp": "2026-09-16T11:39:16"
