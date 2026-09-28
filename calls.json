@@ -1,6 +1,13 @@
 [
   {
     "name": "unknown",
+    "number": "52135",
+    "duration": "193",
+    "type": "outgoing",
+    "timestamp": "2026-09-28T10:40:52"
+  },
+  {
+    "name": "unknown",
     "number": "03046690015",
     "duration": "15",
     "type": "incoming",
