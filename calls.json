@@ -1,5 +1,12 @@
 [
   {
+    "name": "unknown",
+    "number": "08001617800",
+    "duration": "87",
+    "type": "outgoing",
+    "timestamp": "2026-09-28T11:58:21"
+  },
+  {
     "name": "Horn Steuerbüro",
     "number": "02841505111",
     "duration": "32",
