@@ -1,5 +1,12 @@
 [
   {
+    "name": "Horn Steuerbüro",
+    "number": "02841505111",
+    "duration": "158",
+    "type": "outgoing",
+    "timestamp": "2026-10-06T12:57:03"
+  },
+  {
     "name": "unknown",
     "number": "0203281911341",
     "duration": "1419",
