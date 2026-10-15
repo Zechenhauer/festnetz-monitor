@@ -2,6 +2,13 @@
   {
     "name": "Krankeng., Schneider",
     "number": "0206638922",
+    "duration": "26",
+    "type": "incoming",
+    "timestamp": "2026-10-15T14:40:46"
+  },
+  {
+    "name": "Krankeng., Schneider",
+    "number": "0206638922",
     "duration": "71",
     "type": "outgoing",
     "timestamp": "2026-10-15T14:14:21"
