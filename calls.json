@@ -1,5 +1,12 @@
 [
   {
+    "name": "unknown",
+    "number": "02842929520",
+    "duration": "44",
+    "type": "outgoing",
+    "timestamp": "2026-10-15T15:03:43"
+  },
+  {
     "name": "Krankeng., Schneider",
     "number": "0206638922",
     "duration": "26",
