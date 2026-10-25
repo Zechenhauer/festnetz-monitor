@@ -1,5 +1,12 @@
 [
   {
+    "name": "Rustica",
+    "number": "51346",
+    "duration": "36",
+    "type": "outgoing",
+    "timestamp": "2026-10-25T17:17:16"
+  },
+  {
     "name": "unknown",
     "number": "54238",
     "duration": "1275",
