@@ -1,5 +1,12 @@
 [
   {
+    "name": "unknown",
+    "number": "54238",
+    "duration": "650",
+    "type": "outgoing",
+    "timestamp": "2026-11-07T12:56:12"
+  },
+  {
     "name": "Ruth",
     "number": "0284125458",
     "duration": "231",
