@@ -2,6 +2,13 @@
   {
     "name": "unknown",
     "number": "02151154080",
+    "duration": "10",
+    "type": "incoming",
+    "timestamp": "2026-11-09T18:13:12"
+  },
+  {
+    "name": "unknown",
+    "number": "02151154080",
     "duration": "436",
     "type": "outgoing",
     "timestamp": "2026-11-09T15:59:09"
