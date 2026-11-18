@@ -1,5 +1,12 @@
 [
   {
+    "name": "unknown",
+    "number": "028419790585",
+    "duration": "758",
+    "type": "incoming",
+    "timestamp": "2026-11-18T16:55:38"
+  },
+  {
     "name": "Nagelstudio",
     "number": "028418825526",
     "duration": "127",
