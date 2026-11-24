@@ -2,6 +2,13 @@
   {
     "name": "Gnoß Maria",
     "number": "0284154238",
+    "duration": "0",
+    "type": "incoming",
+    "timestamp": "2026-11-24T10:07:09"
+  },
+  {
+    "name": "Gnoß Maria",
+    "number": "0284154238",
     "duration": "29",
     "type": "outgoing",
     "timestamp": "2026-11-24T09:36:03"
